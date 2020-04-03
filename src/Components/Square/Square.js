@@ -7,6 +7,9 @@ import './Square.css';
 //color -- background color
 
 const Square = (props) => {
+
+
+    
     return (
         <div>
             <button className="Square">

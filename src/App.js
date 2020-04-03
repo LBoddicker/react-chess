@@ -1,24 +1,33 @@
 import React from "react";
-import logo from "./logo.svg";
+import Board from "./Components/Board/Board"
 import "./App.css";
 
 function App() {
+  const myArr = [ [null, null, null, null, null, null, null, null],
+                  [null, null, null, null, null, null, null, null],
+                  [null, null, null, null, null, null, null, null],
+                  [null, null, null, null, null, null, null, null],
+                  [null, null, null, null, null, null, null, null],
+                  [null, null, null, null, null, null, null, null],
+                  [null, null, null, null, null, null, null, null],
+                  [null, null, null, null, null, null, null, null]]
+
+  const myHlt = [ [null, null, null, null, null, null, null, null],
+                  [null, null, null, null, null, null, null, null],
+                  [null, null, null, null, null, null, null, null],
+                  [null, null, null, null, null, null, null, null],
+                  [null, null, null, null, null, null, null, null],
+                  [null, null, null, null, null, null, null, null],
+                  [null, null, null, null, null, null, null, null],
+                  [null, null, null, null, null, null, null, null]]
+
+  const clickHandler = () => {
+    console.log('This was clicked')
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div >
+      <Board position={myArr} highlight={myHlt} clickFunc={clickHandler}/>
     </div>
   );
 }

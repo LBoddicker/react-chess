@@ -1,0 +1,7 @@
+.Board {
+    display: flex;
+}
+
+.Row {
+    display: flex-inline;
+}

@@ -3,11 +3,13 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import Square from "./Components/Square/Square";
+import Board from "./Components/Board/Board";
+import Game from "./Components/Game/Game";
 import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Square value="X" />
+    <Game />
   </React.StrictMode>,
   document.getElementById("root")
 );
