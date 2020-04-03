@@ -6,6 +6,10 @@ import './Square.css';
 //ID - the ID this button is given
 //color -- background color
 
+//props.highLight - if the square is highlighted
+//props.backgroundColor - what color the background is
+//props.value - what piece is on this square
+//props.clickCallBack - callback function for when clicked
 const Square = (props) => {
 
     var cur_piece = null
@@ -51,23 +55,27 @@ const Square = (props) => {
     }
 
     let className = 'Square'
-    switch(props.type){
-        case "blackSquare":
-            className += ' BlackSquare'
-            break;
-        case "whiteSquare":
-            className += ' WhiteSquare'
-            break;
-        case "HighLightSquare":
-            className += ' HighLightSquare'
-            break;
-        default:
-            className += ' WhiteSquare'
+    if(!props.highLight){
+        switch(props.backgroundColor){
+            case "black":
+                className += ' BlackSquare'
+                break;
+            case "white":
+                className += ' WhiteSquare'
+                break;
+            default:
+                className += ' WhiteSquare'
+        }
     }
+    else
+    {
+        className += 'highLightSquare'
+    }
+    
 
     return (
         <div>
-            <button className={className}>
+            <button className={className} onClick={props.clickCallBack}>
                 {cur_piece}
             </button>
         </div>
