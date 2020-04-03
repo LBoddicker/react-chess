@@ -4,6 +4,18 @@
   background-color: red;
 }
 
+.BlackSquare {
+    background-color: brown;
+}
+
+.WhiteSquare {
+    background-color: white;
+}
+
+.HighLightSquare {
+    background-color: yellow;
+}
+
 img {
     height: 70px;
     width: 70px;
