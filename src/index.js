@@ -1,12 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import Square from "./Components/Square/Square";
+import Game from './Components/Game/Game'
 import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Square value="wPawn" type="blackSquare"/>
+    <Game />
   </React.StrictMode>,
   document.getElementById("root")
 );
