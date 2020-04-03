@@ -6,7 +6,7 @@ import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Square value="wPawn"/>
+    <Square value="wPawn" type="blackSquare"/>
   </React.StrictMode>,
   document.getElementById("root")
 );

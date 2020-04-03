@@ -50,9 +50,24 @@ const Square = (props) => {
             cur_piece = null
     }
 
+    let className = 'Square'
+    switch(props.type){
+        case "blackSquare":
+            className += ' BlackSquare'
+            break;
+        case "whiteSquare":
+            className += ' WhiteSquare'
+            break;
+        case "HighLightSquare":
+            className += ' HighLightSquare'
+            break;
+        default:
+            className += ' WhiteSquare'
+    }
+
     return (
         <div>
-            <button className="Square">
+            <button className={className}>
                 {cur_piece}
             </button>
         </div>
