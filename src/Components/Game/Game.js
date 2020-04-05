@@ -7,7 +7,7 @@ class Game extends React.Component {
     constructor(props) {
         super(props)
         this.state = {  piecePosition : [   [PIECE.BLACK_ROOK,PIECE.BLACK_KNIGHT,PIECE.BLACK_BISHOP,PIECE.BLACK_QUEEN,PIECE.BLACK_KING,PIECE.BLACK_BISHOP,PIECE.BLACK_KNIGHT,PIECE.BLACK_ROOK],
-                                            [PIECE.BLACK_PAWN,PIECE.BLACK_PAWN,PIECE.BLACK_PAWN,PIECE.BLACK_PAWN,PIECE.BLACK_PAWN,,PIECE.BLACK_PAWN,PIECE.BLACK_PAWN,PIECE.BLACK_PAWN],
+                                            [PIECE.BLACK_PAWN,PIECE.BLACK_PAWN,PIECE.BLACK_PAWN,PIECE.BLACK_PAWN,PIECE.BLACK_PAWN,PIECE.BLACK_PAWN,PIECE.BLACK_PAWN,PIECE.BLACK_PAWN],
                                             [null,null,null,null,null,null,null,null],
                                             [null,null,null,null,null,null,null,null],
                                             [null,null,null,null,null,null,null,null],
@@ -33,26 +33,37 @@ class Game extends React.Component {
         return [row, col]
     }
 
+
+
     clickCallBack = (id) => {
-        if(this.state.cellSelected === null){
-            this.setState( {cellSelected : id} )
-        }
-        else if(id === this.state.cellSelected){
-            this.setState( {cellSelected : null})
-        }
-        else
-        {
-            var copiedArr = this.arrayDeepCopy(this.state.piecePosition)
+        var rowAndCol = this.getRowAndCol(id)
+        var row = rowAndCol[0]
+        var col = rowAndCol[1]
 
-            let old = this.getRowAndCol(this.state.cellSelected)
-            let n = this.getRowAndCol(id)
+        var copiedArr = [...Array(8)].map(e => Array(8).fill(false))
+        copiedArr[row][col] = true
 
-            copiedArr[n[0]][n[1]] = this.state.piecePosition[old[0]][old[1]]
-            copiedArr[old[0]][old[1]] = null 
+        this.setState( { highlightPostion : copiedArr })
+
+        // if(this.state.cellSelected === null){
+        //     this.setState( {cellSelected : id} )
+        // }
+        // else if(id === this.state.cellSelected){
+        //     this.setState( {cellSelected : null})
+        // }
+        // else
+        // {
+        //     var copiedArr = this.arrayDeepCopy(this.state.piecePosition)
+
+        //     let old = this.getRowAndCol(this.state.cellSelected)
+        //     let n = this.getRowAndCol(id)
+
+        //     copiedArr[n[0]][n[1]] = this.state.piecePosition[old[0]][old[1]]
+        //     copiedArr[old[0]][old[1]] = null 
             
-            this.setState( {piecePosition : copiedArr,
-                            cellSelected : null} )
-        }
+        //     this.setState( {piecePosition : copiedArr,
+        //                     cellSelected : null} )
+        // }
     }
 
     render() {
@@ -60,7 +71,6 @@ class Game extends React.Component {
             <div>
                 <Board
                     pieceArr={this.state.piecePosition}
-                    backgroundArr={this.state.boardColor}
                     highlightArr={this.state.highlightPostion}
                     clickCallBack={this.clickCallBack}
                 />

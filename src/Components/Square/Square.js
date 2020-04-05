@@ -36,7 +36,7 @@ const Square = (props) => {
         case PIECE.BLACK_KING:
             cur_piece = <img src={ require('../../Images/bKing.png')} alt=""/>
         break;
-        case PIECE.BLACK_KING:
+        case PIECE.BLACK_QUEEN:
             cur_piece = <img src={ require('../../Images/bQueen.png')} alt=""/>
         break;
         case PIECE.BLACK_BISHOP:
@@ -70,7 +70,7 @@ const Square = (props) => {
     }
     else
     {
-        className += 'highLightSquare'
+        className += ' HighLightSquare'
     }
     
 
