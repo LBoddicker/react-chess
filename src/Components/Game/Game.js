@@ -39,30 +39,80 @@ class Game extends React.Component {
         this.setState( { highlightPostion : tempHLTArr})
     }
 
-    clickCallBack = (id) => {
+    getKnightMoves = (row, col, board) => {
+        let offsets =  [[-2,1],
+                    [-2,-1],
+                    [2,1],
+                    [2,-1],
+                    [1,2],
+                    [-1,2],
+                    [1,-2],
+                    [-1,-2]]
+
+        let retSet = []
+
+        offsets.forEach(e => {
+            let curRow = row + e[0]
+            let curCol = col + e[1]
+            if(curRow >= 0 && curCol >= 0 && curRow <= 7 && curRow <= 7){
+                retSet.push([curRow, curCol])
+            }
+        })
+
+        console.log(retSet)
+
+        return retSet
+    }
+
+    getMoves = (id) => {
         var rowAndCol = this.getRowAndCol(id)
-        
-        this.highlightPositions([rowAndCol])
+        let ret = null
 
-        // if(this.state.cellSelected === null){
-        //     this.setState( {cellSelected : id} )
-        // }
-        // else if(id === this.state.cellSelected){
-        //     this.setState( {cellSelected : null})
-        // }
-        // else
-        // {
-        //     var copiedArr = this.arrayDeepCopy(this.state.piecePosition)
+        switch(this.state.piecePosition[rowAndCol[0]][rowAndCol[1]]){
+            case PIECE.WHITE_KING:
+                ret = this.getKingMoves()
+                break;
+            case PIECE.WHITE_QUEEN:
+                ret = this.getKingMoves()
+                break;
+            case PIECE.WHITE_PAWN:
+                ret = this.getKingMoves()
+                break;  
+            case PIECE.WHITE_BISHOP:
+                ret = this.getKingMoves()
+                break;
+            case PIECE.WHITE_KNIGHT:
+                ret = this.getKnightMoves(rowAndCol[0],rowAndCol[1])
+                break;
+            case PIECE.WHITE_ROOK:
+                ret = this.getKingMoves()
+                break;  
+            case PIECE.BLACK_KING:
+                ret = this.getKingMoves()
+                break;
+            case PIECE.BLACK_QUEEN:
+                ret = this.getKingMoves()
+                break;
+            case PIECE.BLACK_PAWN:
+                ret = this.getKingMoves()
+                break;  
+            case PIECE.BLACK_BISHOP:
+                ret = this.getKingMoves()
+                break;
+            case PIECE.BLACK_KNIGHT:
+                ret = this.getKnightMoves(rowAndCol[0],rowAndCol[1])
+                break;
+            case PIECE.BLACK_ROOK:
+                ret = this.getKingMoves()
+                break;
+            default:
+                ret = []
+        }
+        return ret
+    }
 
-        //     let old = this.getRowAndCol(this.state.cellSelected)
-        //     let n = this.getRowAndCol(id)
-
-        //     copiedArr[n[0]][n[1]] = this.state.piecePosition[old[0]][old[1]]
-        //     copiedArr[old[0]][old[1]] = null 
-            
-        //     this.setState( {piecePosition : copiedArr,
-        //                     cellSelected : null} )
-        // }
+    clickCallBack = (id) => {
+        this.highlightPositions(this.getMoves(id))
     }
 
     render() {
