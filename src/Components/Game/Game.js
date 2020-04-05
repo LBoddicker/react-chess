@@ -33,17 +33,16 @@ class Game extends React.Component {
         return [row, col]
     }
 
-
+    highlightPositions = (positions) => {
+        var tempHLTArr = [...Array(8)].map(e => Array(8).fill(false))
+        positions.forEach(e => tempHLTArr[e[0]][e[1]] = true)
+        this.setState( { highlightPostion : tempHLTArr})
+    }
 
     clickCallBack = (id) => {
         var rowAndCol = this.getRowAndCol(id)
-        var row = rowAndCol[0]
-        var col = rowAndCol[1]
-
-        var copiedArr = [...Array(8)].map(e => Array(8).fill(false))
-        copiedArr[row][col] = true
-
-        this.setState( { highlightPostion : copiedArr })
+        
+        this.highlightPositions([rowAndCol])
 
         // if(this.state.cellSelected === null){
         //     this.setState( {cellSelected : id} )
