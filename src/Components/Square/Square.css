@@ -2,6 +2,7 @@
   height: 90px;
   width: 90px;
   background-color: red;
+  outline: none;
 }
 
 .BlackSquare {
