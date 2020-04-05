@@ -2,6 +2,15 @@ import React from 'react';
 import './Board.css';
 import Square from '../Square/Square'
 
+const boardColor = [["white","black","white","black","white","black","white","black"],
+                    ["black","white","black","white","black","white","black","white"],
+                    ["white","black","white","black","white","black","white","black"],
+                    ["black","white","black","white","black","white","black","white"],
+                    ["white","black","white","black","white","black","white","black"],
+                    ["black","white","black","white","black","white","black","white"],
+                    ["white","black","white","black","white","black","white","black"],
+                    ["black","white","black","white","black","white","black","white"]]
+
 //Board must have callback function
 //Board - square color
 
@@ -28,7 +37,7 @@ const Board = (props) => {
     const getRow = (rowNum) => {
         return(
             <div className="Row" key={rowNum}> 
-                { props.pieceArr[rowNum].map( (d, idx) => <Square clickCallBack={() => props.clickCallBack(getID(rowNum, idx))} key={getID(rowNum, idx)} highLight={props.highlightArr[rowNum][idx]} backgroundColor={props.backgroundArr[rowNum][idx]} value={d}/>) }
+                { props.pieceArr[rowNum].map( (d, idx) => <Square clickCallBack={() => props.clickCallBack(getID(rowNum, idx))} key={getID(rowNum, idx)} highLight={props.highlightArr[rowNum][idx]} backgroundColor={boardColor[rowNum][idx]} value={d}/>) }
             </div>
         )
     }

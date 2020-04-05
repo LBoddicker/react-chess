@@ -15,14 +15,6 @@ class Game extends React.Component {
                                             [PIECE.WHITE_PAWN,PIECE.WHITE_PAWN,PIECE.WHITE_PAWN,PIECE.WHITE_PAWN,PIECE.WHITE_PAWN,PIECE.WHITE_PAWN,PIECE.WHITE_PAWN,PIECE.WHITE_PAWN],  
                                             [PIECE.WHITE_ROOK,PIECE.WHITE_KNIGHT,PIECE.WHITE_BISHOP,PIECE.WHITE_QUEEN,PIECE.WHITE_KING,PIECE.WHITE_BISHOP,PIECE.WHITE_KNIGHT,PIECE.WHITE_ROOK]],
                         highlightPostion : [...Array(8)].map(e => Array(8).fill(false)),
-                        boardColor : [  ["white","black","white","black","white","black","white","black"],
-                                        ["black","white","black","white","black","white","black","white"],
-                                        ["white","black","white","black","white","black","white","black"],
-                                        ["black","white","black","white","black","white","black","white"],
-                                        ["white","black","white","black","white","black","white","black"],
-                                        ["black","white","black","white","black","white","black","white"],
-                                        ["white","black","white","black","white","black","white","black"],
-                                        ["black","white","black","white","black","white","black","white"]],
                         cellSelected : null
                         }
     }
