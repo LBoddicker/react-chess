@@ -1,18 +1,19 @@
 import React from 'react'
 import './Game.js'
 import Board from "../Board/Board"
+import { PIECE } from '../../Utils/enums'
 
 class Game extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {  piecePosition : [   ["bRook","bKnight","bBishop","bQueen","bKing","bBishop","bKnight","bRook"],
-                                            ["bPawn","bPawn","bPawn","bPawn","bPawn","bPawn","bPawn","bPawn"],
+        this.state = {  piecePosition : [   [PIECE.BLACK_ROOK,PIECE.BLACK_KNIGHT,PIECE.BLACK_BISHOP,PIECE.BLACK_QUEEN,PIECE.BLACK_KING,PIECE.BLACK_BISHOP,PIECE.BLACK_KNIGHT,PIECE.BLACK_ROOK],
+                                            [PIECE.BLACK_PAWN,PIECE.BLACK_PAWN,PIECE.BLACK_PAWN,PIECE.BLACK_PAWN,PIECE.BLACK_PAWN,,PIECE.BLACK_PAWN,PIECE.BLACK_PAWN,PIECE.BLACK_PAWN],
                                             [null,null,null,null,null,null,null,null],
                                             [null,null,null,null,null,null,null,null],
                                             [null,null,null,null,null,null,null,null],
                                             [null,null,null,null,null,null,null,null],
-                                            ["wPawn","wPawn","wPawn","wPawn","wPawn","wPawn","wPawn","wPawn"],
-                                            ["wRook", "wKnight", "wBishop","wQueen","wKing","wBishop","wKnight","wRook"]],
+                                            [PIECE.WHITE_PAWN,PIECE.WHITE_PAWN,PIECE.WHITE_PAWN,PIECE.WHITE_PAWN,PIECE.WHITE_PAWN,PIECE.WHITE_PAWN,PIECE.WHITE_PAWN,PIECE.WHITE_PAWN],  
+                                            [PIECE.WHITE_ROOK,PIECE.WHITE_KNIGHT,PIECE.WHITE_BISHOP,PIECE.WHITE_QUEEN,PIECE.WHITE_KING,PIECE.WHITE_BISHOP,PIECE.WHITE_KNIGHT,PIECE.WHITE_ROOK]],
                         highlightPostion : [...Array(8)].map(e => Array(8).fill(false)),
                         boardColor : [  ["white","black","white","black","white","black","white","black"],
                                         ["black","white","black","white","black","white","black","white"],

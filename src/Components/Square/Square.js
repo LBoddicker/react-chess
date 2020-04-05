@@ -1,5 +1,6 @@
 import React from 'react';
 import './Square.css';
+import { PIECE } from '../../Utils/enums'
 
 //Value - What is displayed
 //Callback - function that is called when pressed
@@ -14,40 +15,40 @@ const Square = (props) => {
 
     var cur_piece = null
     switch(props.value) {
-        case "wKing":
+        case PIECE.WHITE_KING:
             cur_piece = <img src={ require('../../Images/wKing.png')} alt=""/>
         break;
-        case "wQueen":
+        case PIECE.WHITE_QUEEN:
             cur_piece = <img src={ require('../../Images/wQueen.png')} alt=""/>
         break;
-        case "wBishop":
+        case PIECE.WHITE_BISHOP:
             cur_piece = <img src={ require('../../Images/wBishop.png')} alt=""/>
         break;
-        case "wKnight":
+        case PIECE.WHITE_KNIGHT:
             cur_piece = <img src={ require('../../Images/wKnight.png')} alt=""/>
         break;
-        case "wRook":
+        case PIECE.WHITE_ROOK:
             cur_piece = <img src={ require('../../Images/wRook.png')} alt=""/>
         break;
-        case "wPawn":
+        case PIECE.WHITE_PAWN:
             cur_piece = <img src={ require('../../Images/wPawn.png')} alt=""/>
         break;
-        case "bKing":
+        case PIECE.BLACK_KING:
             cur_piece = <img src={ require('../../Images/bKing.png')} alt=""/>
         break;
-        case "bQueen":
+        case PIECE.BLACK_KING:
             cur_piece = <img src={ require('../../Images/bQueen.png')} alt=""/>
         break;
-        case "bBishop":
+        case PIECE.BLACK_BISHOP:
             cur_piece = <img src={ require('../../Images/bBishop.png')} alt=""/>
         break;
-        case "bKnight":
+        case PIECE.BLACK_KNIGHT:
             cur_piece = <img src={ require('../../Images/bKnight.png')} alt=""/>
         break;
-        case "bRook":
+        case PIECE.BLACK_ROOK:
             cur_piece = <img src={ require('../../Images/bRook.png')} alt=""/>
         break;
-        case "bPawn":
+        case PIECE.BLACK_PAWN:
             cur_piece = <img src={ require('../../Images/bPawn.png')} alt=""/>
         break;
         default:
