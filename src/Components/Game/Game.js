@@ -39,7 +39,49 @@ class Game extends React.Component {
         this.setState( { highlightPostion : tempHLTArr})
     }
 
-    getKnightMoves = (row, col, board) => {
+    isWhitePiece = (inPiece) => {
+        switch(inPiece){
+            case PIECE.WHITE_KING:
+                return true;
+            case PIECE.WHITE_QUEEN:
+                return true;
+            case PIECE.WHITE_PAWN:
+                return true;
+            case PIECE.WHITE_BISHOP:
+                return true;
+            case PIECE.WHITE_KNIGHT:
+                return true;
+            case PIECE.WHITE_ROOK:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    inBounds = (row, col) => {
+        if(row >= 0 && row <= 7 && col >= 0 && col <= 7){
+            return true
+        }
+        return false
+    }
+
+    getPawnMoves = (row, col, board) => {
+        let ret = []
+        if(this.isWhitePiece(board[row][col])){
+            if(this.inBounds(row-1, col)){
+                ret.push([row-1,col])
+            }
+        }
+        else
+        {
+            if(this.inBounds(row+1, col)){
+                ret.push([row+1,col])
+            }
+        }
+        return ret
+    }
+
+    getKnightMoves = (row, col) => {
         let offsets =  [[-2,1],
                     [-2,-1],
                     [2,1],
@@ -64,6 +106,10 @@ class Game extends React.Component {
         return retSet
     }
 
+    getRookMoves = (row, col) => {
+        
+    }
+
     getMoves = (id) => {
         var rowAndCol = this.getRowAndCol(id)
         let ret = null
@@ -76,7 +122,7 @@ class Game extends React.Component {
                 ret = this.getKingMoves()
                 break;
             case PIECE.WHITE_PAWN:
-                ret = this.getKingMoves()
+                ret = this.getPawnMoves(rowAndCol[0],rowAndCol[1],this.state.piecePosition)
                 break;  
             case PIECE.WHITE_BISHOP:
                 ret = this.getKingMoves()
@@ -94,7 +140,7 @@ class Game extends React.Component {
                 ret = this.getKingMoves()
                 break;
             case PIECE.BLACK_PAWN:
-                ret = this.getKingMoves()
+                ret = this.getPawnMoves(rowAndCol[0],rowAndCol[1],this.state.piecePosition)
                 break;  
             case PIECE.BLACK_BISHOP:
                 ret = this.getKingMoves()
@@ -108,6 +154,7 @@ class Game extends React.Component {
             default:
                 ret = []
         }
+        console.log(ret)
         return ret
     }
 
