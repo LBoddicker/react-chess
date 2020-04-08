@@ -13,3 +13,15 @@ test('getPiece_test', () => {
     expect(wKingPiece).toBe(PIECE.WHITE_KING)
     expect(bPawnPiece).toBe(PIECE.BLACK_PAWN)
 })
+
+test('getSide_test', () => {
+    expect(gameLogic.getSide(PIECE.BLACK_QUEEN)).toBe(SIDE.BLACK_SIDE)
+    expect(gameLogic.getSide(PIECE.WHITE_PAWN)).toBe(SIDE.WHITE_SIDE)
+})
+
+test('areFriends_test', () => {
+    expect(gameLogic.areFriends(testGameState, new Position(1,0), new Position(1,3))).toBe(true)
+    expect(gameLogic.areFriends(testGameState, new Position(1,0), new Position(6,3))).toBe(false)
+    expect(gameLogic.areFriends(testGameState, new Position(1,0), new Position(2,0))).toBe(false)
+
+})

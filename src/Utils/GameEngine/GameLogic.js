@@ -6,7 +6,8 @@ const cloneDeep = require('lodash/cloneDeep')
  * This a highlevel function that will return a list of Move objects for any piece
  * The list will be parsed to include only valid moves
  * @param {GameState} board 
- * @param {Position} curPos 
+ * @param {Position} curPos
+ * @returns {[Move]} 
  */
 export const getPieceMoves = (board, curPos) => {
     let curPiece = getPiece(board, curPos)
@@ -113,8 +114,8 @@ export const getSide = (curPiece) => {
  * @param {Position} bPos 
  */
 export const areFriends = (board, aPos, bPos) => {
-    aPiece = getPiece(board, aPos)
-    bPiece = getPiece(board, bPos)
+    let aPiece = getPiece(board, aPos)
+    let bPiece = getPiece(board, bPos)
     if(aPiece === null || bPiece === null){
         return false
     }
