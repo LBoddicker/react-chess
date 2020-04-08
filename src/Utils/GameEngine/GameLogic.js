@@ -11,50 +11,37 @@ const cloneDeep = require('lodash/cloneDeep')
  */
 export const getPieceMoves = (board, curPos) => {
     let curPiece = getPiece(board, curPos)
-    let ret = []
 
     if(curPiece === null){
         console.log("getPieceMoves - piece not selected")
-        return ret
+        return []
     }
 
     switch(curPiece){
         case PIECE.WHITE_KING:
-            ret = getKingMoves(board, curPos)
-            break;
+            return getKingMoves(board, curPos)
         case PIECE.WHITE_QUEEN:
-            ret = getKingMoves(board, curPos)
-            break;
+            return getKingMoves(board, curPos)
         case PIECE.WHITE_PAWN:
-            ret = getPawnMoves(board, curPos)
-            break;  
+            return getPawnMoves(board, curPos)
         case PIECE.WHITE_BISHOP:
-            ret = getKingMoves(board, curPos)
-            break;
+            return getKingMoves(board, curPos)
         case PIECE.WHITE_KNIGHT:
-            ret = getKnightMoves(board, curPos)
-            break;
+            return getKnightMoves(board, curPos)
         case PIECE.WHITE_ROOK:
-            ret = getKingMoves(board, curPos)
-            break;  
+            return getKingMoves(board, curPos)
         case PIECE.BLACK_KING:
-            ret = getKingMoves(board, curPos)
-            break;
+            return getKingMoves(board, curPos)
         case PIECE.BLACK_QUEEN:
-            ret = getKingMoves(board, curPos)
-            break;
+            return getKingMoves(board, curPos)
         case PIECE.BLACK_PAWN:
-            ret = getPawnMoves(board, curPos)
-            break;  
+            return getPawnMoves(board, curPos)
         case PIECE.BLACK_BISHOP:
-            ret = getKingMoves(board, curPos)
-            break;
+            return getKingMoves(board, curPos)
         case PIECE.BLACK_KNIGHT:
-            ret = getKnightMoves(board, curPos)
-            break;
+            return getKnightMoves(board, curPos)
         case PIECE.BLACK_ROOK:
-            ret = getKingMoves(board, curPos)
-            break;
+            return getKingMoves(board, curPos)
         default:
             throw "getPieceMoves - default reached"
     }
@@ -246,28 +233,81 @@ export const kingInCheck = (board, side) => {
  * @param {Position} curPos 
  */
 export const getKingMoves = (board, curPos) => {
+    //TODO: Implement kingInCheck
     let candidateMoves = getKingCandidateMoves(board, curPos)
     let ret = []
 
     //when king makes a move he cannot move into an attack
-    candidateMoves.forEach( curMove => {
-        let tempGameState = makeMove(board, curMove)
-        if(!kingInCheck(tempGameState, getSide(getPiece(board, curPos)))){
-            ret.push(curMove)
-        }
-    })
+    // candidateMoves.forEach( curMove => {
+    //     let tempGameState = makeMove(board, curMove)
+    //     if(!kingInCheck(tempGameState, getSide(getPiece(board, curPos)))){
+    //         ret.push(curMove)
+    //     }
+    // })
 
-    return ret
+    return candidateMoves
+}
+
+export const getPawnCandidateMoves = (board, curPos) => {
+    let offset = (getSide(getPiece(board, curPos)) === SIDE.WHITE_SIDE)? [-1] : [1]
+    
 }
 
 export const getPawnMoves = (board, curPos) => {
-    //TODO - Implement getPawnMoves
-    throw "NOT IMPLEMENTED"
+    //TODO - Implement kingInCheck
+    let candidateMoves = getPawnCandidateMoves(board, curPos)
+    let ret = []
+
+    // candidateMoves.forEach( curMove => {
+    //     let tempGameState = makeMove(board, curMove)
+    //     if(!kingInCheck(tempGameState, getSide(getPiece(board, curPos)))){
+    //         ret.push(curMove)
+    //     }
+    // })
+
+    return candidateMoves
 }
 
+/**
+ * Returns candidate moves for the knight
+ * This method only check that the move is still on the board
+ * and does not land on a friendly piece
+ * @param {*} board 
+ * @param {*} curPos 
+ * @returns {[Move]}
+ */
+export const getKnightCandidateMoves = (board, curPos) => {
+    let offsets = [[-2,-1],[-2,1],[-1,-2],[1,-2],[-1,2],[1,2],[2,-1],[2,1]]
+    let ret = []
+
+    offsets.forEach( curOffset => {
+        let newPos = new Position(curPos.row + curOffset[0], curPos.col + curOffset[1])
+        if(newPos.isOnBoard() && !areFriends(board, curPos, newPos)){
+            ret.push(new Move(curPos, newPos))
+        }
+    })
+    return ret
+}
+
+/**
+ * returns all valid moves for 
+ * @param {GameState} board 
+ * @param {Position} curPos
+ * @returns {[Move]}
+ */
 export const getKnightMoves = (board, curPos) => {
-    //TODO - Implement getKnightMoves
-    throw "NOT IMPLEMENTED"
+    //TODO - Implement kingInCheck
+    let candidateMoves = getKnightCandidateMoves(board, curPos)
+    let ret = []
+
+    // candidateMoves.forEach( curMove => {
+    //     let tempGameState = makeMove(board, curMove)
+    //     if(!kingInCheck(tempGameState, getSide(getPiece(board, curPos)))){
+    //         ret.push(curMove)
+    //     }
+    // })
+
+    return candidateMoves
 }
 
 export const isPiece = (board, curPos) => {

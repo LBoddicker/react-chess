@@ -14,10 +14,13 @@ class Game extends React.Component {
 
     clickCallBack = (clickPos) => {
         console.log(clickPos)
+        console.log(this.state.curGame)
         let selectedMoves = []
         if(gameLogic.isPiece(this.state.curGame, clickPos)){
             selectedMoves = gameLogic.getPieceMoves(this.state.curGame, clickPos)
         }
+
+        console.log(selectedMoves)
 
         let newHLTPositions = [...Array(8)].map(e => Array(8).fill(false))
         selectedMoves.forEach( e => {
