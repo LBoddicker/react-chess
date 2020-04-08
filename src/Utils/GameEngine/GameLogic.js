@@ -196,9 +196,12 @@ export const findKingPos = (board, side) => {
 export const getTeamPositions = (board, side) => {
     let ret = []
 
-
-
     return ret 
+}
+
+export const getCandidateMoves = () => {
+    //TODO - getCandidateMoves
+    throw "NOT IMPLEMENTED"
 }
 
 /**
@@ -244,7 +247,7 @@ export const kingInCheck = (board, side) => {
  */
 export const getKingMoves = (board, curPos) => {
     let candidateMoves = getKingCandidateMoves(board, curPos)
-    ret = []
+    let ret = []
 
     //when king makes a move he cannot move into an attack
     candidateMoves.forEach( curMove => {
@@ -255,4 +258,25 @@ export const getKingMoves = (board, curPos) => {
     })
 
     return ret
+}
+
+export const getPawnMoves = (board, curPos) => {
+    //TODO - Implement getPawnMoves
+    throw "NOT IMPLEMENTED"
+}
+
+export const getKnightMoves = (board, curPos) => {
+    //TODO - Implement getKnightMoves
+    throw "NOT IMPLEMENTED"
+}
+
+export const isPiece = (board, curPos) => {
+    if(!curPos.isOnBoard){
+        throw "isPiece - curPos not on board"
+    }
+
+    if(getPiece(board, curPos) != null){
+        return true
+    }
+    return false
 }

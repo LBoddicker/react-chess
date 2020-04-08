@@ -1,24 +1,38 @@
 import React from 'react'
 import './Game.js'
 import Board from "../Board/Board"
-import { PIECE } from '../../Utils/enums'
+import {GameState} from '../../Utils/GameEngine/GameState'
+import * as gameLogic from '../../Utils/GameEngine/GameLogic'
 
 class Game extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {  }
+        this.state = {  curGame : new GameState(),
+                        highlightPosition : [...Array(8)].map(e => Array(8).fill(false))
+                    }
     }
 
-    clickCallBack = (id) => {
-        this.highlightPositions(this.getMoves(id))
+    clickCallBack = (clickPos) => {
+        console.log(clickPos)
+        let selectedMoves = []
+        if(gameLogic.isPiece(this.state.curGame, clickPos)){
+            selectedMoves = gameLogic.getPieceMoves(this.state.curGame, clickPos)
+        }
+
+        let newHLTPositions = [...Array(8)].map(e => Array(8).fill(false))
+        selectedMoves.forEach( e => {
+            newHLTPositions[e.ePos.row][e.ePos.col] = true
+        })
+
+        this.setState({ highlightPosition : newHLTPositions })
     }
 
     render() {
         return (
             <div>
                 <Board
-                    pieceArr={this.state.piecePosition}
-                    highlightArr={this.state.highlightPostion}
+                    pieceArr={this.state.curGame.piecePositions}
+                    highlightArr={this.state.highlightPosition}
                     clickCallBack={this.clickCallBack}
                 />
             </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import './Board.css';
 import Square from '../Square/Square'
+import {Position} from '../../Utils/GameEngine/GameHelpers'
 
 const boardColor = [["white","black","white","black","white","black","white","black"],
                     ["black","white","black","white","black","white","black","white"],
@@ -36,8 +37,15 @@ const Board = (props) => {
     //is the key situation here okay? There are overlaping keys for the square and the div
     const getRow = (rowNum) => {
         return(
-            <div className="Row" key={rowNum}> 
-                { props.pieceArr[rowNum].map( (d, idx) => <Square clickCallBack={() => props.clickCallBack(getID(rowNum, idx))} key={getID(rowNum, idx)} highLight={props.highlightArr[rowNum][idx]} backgroundColor={boardColor[rowNum][idx]} value={d}/>) }
+            <div className="Row" key={100*rowNum}> 
+                { props.pieceArr[rowNum].map( (d, idx) => <Square 
+                                                            clickCallBack={() => props.clickCallBack(new Position(rowNum, idx))} 
+                                                            key={getID(rowNum, idx)}
+                                                            highLight={props.highlightArr[rowNum][idx]}
+                                                            backgroundColor={boardColor[rowNum][idx]} value={d}
+                                                            />
+                                            )
+                }
             </div>
         )
     }

@@ -1,6 +1,6 @@
 import React from 'react';
 import './Square.css';
-import { PIECE } from '../../Utils/enums'
+import { PIECE } from '../../Utils/GameEngine/GameHelpers'
 
 //Value - What is displayed
 //Callback - function that is called when pressed
