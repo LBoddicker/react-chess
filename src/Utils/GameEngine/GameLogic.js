@@ -21,27 +21,27 @@ export const getPieceMoves = (board, curPos) => {
         case PIECE.WHITE_KING:
             return getKingMoves(board, curPos)
         case PIECE.WHITE_QUEEN:
-            return getKingMoves(board, curPos)
+            return getQueenMoves(board, curPos)
         case PIECE.WHITE_PAWN:
             return getPawnMoves(board, curPos)
         case PIECE.WHITE_BISHOP:
-            return getKingMoves(board, curPos)
+            return getBishopMoves(board, curPos)
         case PIECE.WHITE_KNIGHT:
             return getKnightMoves(board, curPos)
         case PIECE.WHITE_ROOK:
-            return getKingMoves(board, curPos)
+            return getRookMoves(board, curPos)
         case PIECE.BLACK_KING:
             return getKingMoves(board, curPos)
         case PIECE.BLACK_QUEEN:
-            return getKingMoves(board, curPos)
+            return getQueenMoves(board, curPos)
         case PIECE.BLACK_PAWN:
             return getPawnMoves(board, curPos)
         case PIECE.BLACK_BISHOP:
-            return getKingMoves(board, curPos)
+            return getBishopMoves(board, curPos)
         case PIECE.BLACK_KNIGHT:
             return getKnightMoves(board, curPos)
         case PIECE.BLACK_ROOK:
-            return getKingMoves(board, curPos)
+            return getRookMoves(board, curPos)
         default:
             throw "getPieceMoves - default reached"
     }
@@ -186,7 +186,12 @@ export const getTeamPositions = (board, side) => {
     return ret 
 }
 
-export const getCandidateMoves = () => {
+/**
+ * Returns candidate moves of the piece at the given position
+ * @param {GameState} board 
+ * @param {Position} curPos 
+ */
+export const getCandidateMoves = (board, curPos) => {
     //TODO - getCandidateMoves
     throw "NOT IMPLEMENTED"
 }
@@ -248,11 +253,26 @@ export const getKingMoves = (board, curPos) => {
     return candidateMoves
 }
 
+/**
+ * Returns all potential moves for the Pawn
+ * @param {GameState} board 
+ * @param {Position} curPos 
+ */
 export const getPawnCandidateMoves = (board, curPos) => {
     let offset = (getSide(getPiece(board, curPos)) === SIDE.WHITE_SIDE)? [-1] : [1]
-    
-}
+    let ret = []
 
+    if(!isPiece(board, new Position(curPos.row+offset[0], curPos.col))){
+        ret.push(new Move(curPos, new Position(curPos.row+offset[0], curPos.col)))
+    }
+
+    return ret
+}
+/**
+ * Returns all legal moves for the Pawn
+ * @param {GameState} board 
+ * @param {Position} curPos 
+ */
 export const getPawnMoves = (board, curPos) => {
     //TODO - Implement kingInCheck
     let candidateMoves = getPawnCandidateMoves(board, curPos)
@@ -310,8 +330,83 @@ export const getKnightMoves = (board, curPos) => {
     return candidateMoves
 }
 
+/**
+ * Returns all legal queen moves
+ * @param {GameState} board 
+ * @param {Position} curPos
+ * @returns {[Move]}
+ */
+export const getQueenMoves = (board, curPos) => {
+    //TODO - Implement getQueenMoves
+    throw "NOT IMPLEMENTED"
+}
+
+/**
+ * Returns all legal Bishop moves
+ * @param {GameState} board 
+ * @param {Position} curPos
+ * @returns {[Move]}
+ */
+export const getBishopMoves = (board, curPos) => {
+    //TODO - Implement getBishopMoves
+    throw "NOT IMPLEMENTED"
+}
+
+/**
+ * Returns all candidate rook moves
+ * @param {GameState} board 
+ * @param {Position} curPos
+ * @returns {[Move]}
+ */
+export const getRookCandidateMoves = (board, curPos) => {
+    let offsets = [[1,0],[-1,0],[0,1],[0,-1]]
+    let ret = []
+
+    offsets.forEach( e => {
+        let tempPos = new Position(curPos.row + e[0], curPos.col + e[1])
+        while(tempPos.isOnBoard()){
+            if(!isPiece(board, tempPos)){
+                ret.push(new Move(curPos, tempPos))
+                tempPos = new Position(tempPos.row + e[0], tempPos.col + e[1])
+            }
+        }
+        if(isPiece(board, tempPos) && !areFriends(board, curPos, tempPos)){
+            ret.push(new Move(curPos, tempPos))
+        }
+    })
+
+    return ret
+}
+
+/**
+ * Returns all legal Rook moves
+ * @param {GameState} board 
+ * @param {Position} curPos
+ * @returns {[Move]}
+ */
+export const getRookMoves = (board, curPos) => {
+    //TODO - Implement getRookMoves
+    let candidateMoves = getRookCandidateMoves(board, curPos)
+    let ret = []
+
+    // candidateMoves.forEach( curMove => {
+    //     let tempGameState = makeMove(board, curMove)
+    //     if(!kingInCheck(tempGameState, getSide(getPiece(board, curPos)))){
+    //         ret.push(curMove)
+    //     }
+    // })
+
+    return candidateMoves
+}
+
+/**
+ * Checks to see if there is a piece at the given position
+ * @param {GameState} board 
+ * @param {Postion} curPos
+ * @returns {boolean}
+ */
 export const isPiece = (board, curPos) => {
-    if(!curPos.isOnBoard){
+    if(!curPos.isOnBoard()){
         throw "isPiece - curPos not on board"
     }
 
