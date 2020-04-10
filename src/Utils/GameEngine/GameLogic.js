@@ -342,6 +342,35 @@ export const getQueenMoves = (board, curPos) => {
 }
 
 /**
+ * Returns all candidate moves for the Bishop
+ * @param {GameState} board 
+ * @param {Position} curPos 
+ * @returns {[Move]}
+ */
+export const getBishopCandidateMoves = (board, curPos) => {
+    let offsets = [[-1,-1],[-1,1],[1,-1],[1,1]]
+    let ret = []
+
+    offsets.forEach( e => {
+        let tempPos = new Position(curPos.row + e[0], curPos.col + e[1])
+        while(tempPos.isOnBoard()){
+            if(!isPiece(board, tempPos)){
+                ret.push(new Move(curPos, tempPos))
+            }
+            else{
+                if(!areFriends(board, curPos, tempPos)){
+                    ret.push(new Move(curPos, tempPos))
+                }
+                break;
+            }
+            tempPos = new Position(tempPos.row + e[0], tempPos.col + e[1])
+        }
+    })
+
+    return ret
+}
+
+/**
  * Returns all legal Bishop moves
  * @param {GameState} board 
  * @param {Position} curPos
@@ -349,7 +378,17 @@ export const getQueenMoves = (board, curPos) => {
  */
 export const getBishopMoves = (board, curPos) => {
     //TODO - Implement getBishopMoves
-    throw "NOT IMPLEMENTED"
+    let candidateMoves = getBishopCandidateMoves(board, curPos)
+    let ret = []
+
+    // candidateMoves.forEach( curMove => {
+    //     let tempGameState = makeMove(board, curMove)
+    //     if(!kingInCheck(tempGameState, getSide(getPiece(board, curPos)))){
+    //         ret.push(curMove)
+    //     }
+    // })
+
+    return candidateMoves
 }
 
 /**
@@ -367,11 +406,14 @@ export const getRookCandidateMoves = (board, curPos) => {
         while(tempPos.isOnBoard()){
             if(!isPiece(board, tempPos)){
                 ret.push(new Move(curPos, tempPos))
-                tempPos = new Position(tempPos.row + e[0], tempPos.col + e[1])
             }
-        }
-        if(isPiece(board, tempPos) && !areFriends(board, curPos, tempPos)){
-            ret.push(new Move(curPos, tempPos))
+            else{
+                if(!areFriends(board, curPos, tempPos)){
+                    ret.push(new Move(curPos, tempPos))
+                }
+                break;
+            }
+            tempPos = new Position(tempPos.row + e[0], tempPos.col + e[1])
         }
     })
 
