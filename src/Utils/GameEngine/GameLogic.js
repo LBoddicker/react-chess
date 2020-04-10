@@ -126,9 +126,9 @@ export const getKingCandidateMoves = (board, curPos) => {
     let ret = []
 
     offsets.forEach( curOffset => {
-        let newPos = Position(curPos.row + curOffset[0], curPos.col + curOffset[1])
+        let newPos = new Position(curPos.row + curOffset[0], curPos.col + curOffset[1])
         if(newPos.isOnBoard() && !areFriends(board, curPos, newPos)){
-            ret.push(Move(curPos, newPos))
+            ret.push(new Move(curPos, newPos))
         }
     })
     return ret
