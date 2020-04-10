@@ -259,11 +259,29 @@ export const getKingMoves = (board, curPos) => {
  * @param {Position} curPos 
  */
 export const getPawnCandidateMoves = (board, curPos) => {
-    let offset = (getSide(getPiece(board, curPos)) === SIDE.WHITE_SIDE)? [-1] : [1]
+    let offset = (getSide(getPiece(board, curPos)) === SIDE.WHITE_SIDE)? -1 : 1
     let ret = []
 
-    if(!isPiece(board, new Position(curPos.row+offset[0], curPos.col))){
-        ret.push(new Move(curPos, new Position(curPos.row+offset[0], curPos.col)))
+    if(!isPiece(board, new Position(curPos.row+offset, curPos.col))){
+        ret.push(new Move(curPos, new Position(curPos.row+offset, curPos.col)))
+    }
+
+    let tempAttackPos = new Position(curPos.row + offset, curPos.col + 1)
+    if(tempAttackPos.isOnBoard()){
+        if(isPiece(board, tempAttackPos)){
+            if(!areFriends(board, curPos, tempAttackPos)){
+                ret.push(new Move(curPos, tempAttackPos))
+            }
+        }
+    }
+
+    tempAttackPos = new Position(curPos.row + offset, curPos.col - 1)
+    if(tempAttackPos.isOnBoard()){
+        if(isPiece(board, tempAttackPos)){
+            if(!areFriends(board, curPos, tempAttackPos)){
+                ret.push(new Move(curPos, tempAttackPos))
+            }
+        }
     }
 
     return ret
