@@ -160,14 +160,15 @@ export const makeMove = (board, move) => {
  * Returns the Position of the king of the specified side
  * If no King is found the null is returned
  * @param {GameState} board 
- * @param {SIDE} side 
+ * @param {SIDE} side
+ * @returns {Position}
  */
 export const findKingPos = (board, side) => {
     let matchType = (side === SIDE.WHITE_SIDE)? PIECE.WHITE_KING : PIECE.BLACK_KING
 
     for(let r = 0; r <= 7; r++){
         for(let c = 0; c <= 7; c++){
-            if(getPiece(board, Position(r,c)) === matchType){
+            if(getPiece(board, new Position(r,c)) === matchType){
                 return new Position(r,c)
             }
         }
@@ -179,10 +180,22 @@ export const findKingPos = (board, side) => {
 /**
  * Returns all of the positions of the pieces on a specified side
  * @param {GameState} board 
- * @param {SIDE} side 
+ * @param {SIDE} side
+ * @returns {[Positions]}
  */
 export const getTeamPositions = (board, side) => {
     let ret = []
+
+    for(let r = 0; r <= 7; r++){
+        for(let c = 0; c <= 7; c++){
+            let tempPos = new Position(r,c)
+            if(isPiece(board, tempPos)){
+                if(side === getSide(getPiece(board, tempPos))){
+                    ret.push(tempPos)
+                }
+            }
+        }
+    }
 
     return ret 
 }
@@ -190,11 +203,38 @@ export const getTeamPositions = (board, side) => {
 /**
  * Returns candidate moves of the piece at the given position
  * @param {GameState} board 
- * @param {Position} curPos 
+ * @param {Position} curPos
+ * @returns {[Move]}
  */
 export const getCandidateMoves = (board, curPos) => {
-    //TODO - getCandidateMoves
-    throw "NOT IMPLEMENTED"
+    switch(getPiece(board, curPos)){
+        case PIECE.WHITE_KING:
+            return getKingCandidateMoves(board, curPos)
+        case PIECE.WHITE_QUEEN:
+            return getQueenCandidateMoves(board, curPos)
+        case PIECE.WHITE_PAWN:
+            return getPawnCandidateMoves(board, curPos)
+        case PIECE.WHITE_BISHOP:
+            return getBishopCandidateMoves(board, curPos)
+        case PIECE.WHITE_KNIGHT:
+            return getKnightCandidateMoves(board, curPos)
+        case PIECE.WHITE_ROOK:
+            return getRookCandidateMoves(board, curPos)
+        case PIECE.BLACK_KING:
+            return getKingCandidateMoves(board, curPos)
+        case PIECE.BLACK_QUEEN:
+            return getQueenCandidateMoves(board, curPos)
+        case PIECE.BLACK_PAWN:
+            return getPawnCandidateMoves(board, curPos)
+        case PIECE.BLACK_BISHOP:
+            return getBishopCandidateMoves(board, curPos)
+        case PIECE.BLACK_KNIGHT:
+            return getKnightCandidateMoves(board, curPos)
+        case PIECE.BLACK_ROOK:
+            return getRookCandidateMoves(board, curPos)
+        default:
+            throw "getCandidateMoves - default reached"
+    }
 }
 
 /**
@@ -225,28 +265,27 @@ export const kingInCheck = (board, side) => {
     let enemySide = (side === SIDE.WHITE_SIDE) ? SIDE.BLACK_SIDE : SIDE.WHITE_SIDE
     let possibleEnemyMoves = getTeamCandidateMoves(board, enemySide)
 
-    possibleEnemyMoves.forEach( move => {
+    return possibleEnemyMoves.some( move => {
         if(isEqual(move.ePos, kingPos)){
             return true
         }
     })
-
-    return false
 }
 
 /**
  * This function returns a array of all legal moves that the king can make
  * @param {GameState} board 
- * @param {Position} curPos 
+ * @param {Position} curPos
+ * @returns {[Move]}
  */
 export const getKingMoves = (board, curPos) => {
-    //TODO: Implement kingInCheck
     let candidateMoves = getKingCandidateMoves(board, curPos)
     let ret = []
 
     candidateMoves.forEach( curMove => {
         let tempGameState = makeMove(board, curMove)
-        if(!kingInCheck(tempGameState, getSide(getPiece(board, curPos)))){
+        let tempInCheck = kingInCheck(tempGameState, getSide(getPiece(board, curPos)))
+        if(!tempInCheck){
             ret.push(curMove)
         }
     })
@@ -293,18 +332,18 @@ export const getPawnCandidateMoves = (board, curPos) => {
  * @param {Position} curPos 
  */
 export const getPawnMoves = (board, curPos) => {
-    //TODO - Implement kingInCheck
     let candidateMoves = getPawnCandidateMoves(board, curPos)
     let ret = []
 
-    // candidateMoves.forEach( curMove => {
-    //     let tempGameState = makeMove(board, curMove)
-    //     if(!kingInCheck(tempGameState, getSide(getPiece(board, curPos)))){
-    //         ret.push(curMove)
-    //     }
-    // })
+    candidateMoves.forEach( curMove => {
+        let tempGameState = makeMove(board, curMove)
+        let tempInCheck = kingInCheck(tempGameState, getSide(getPiece(board, curPos)))
+        if(!tempInCheck){
+            ret.push(curMove)
+        }
+    })
 
-    return candidateMoves
+    return ret
 }
 
 /**
@@ -335,18 +374,18 @@ export const getKnightCandidateMoves = (board, curPos) => {
  * @returns {[Move]}
  */
 export const getKnightMoves = (board, curPos) => {
-    //TODO - Implement kingInCheck
     let candidateMoves = getKnightCandidateMoves(board, curPos)
     let ret = []
 
-    // candidateMoves.forEach( curMove => {
-    //     let tempGameState = makeMove(board, curMove)
-    //     if(!kingInCheck(tempGameState, getSide(getPiece(board, curPos)))){
-    //         ret.push(curMove)
-    //     }
-    // })
+    candidateMoves.forEach( curMove => {
+        let tempGameState = makeMove(board, curMove)
+        let tempInCheck = kingInCheck(tempGameState, getSide(getPiece(board, curPos)))
+        if(!tempInCheck){
+            ret.push(curMove)
+        }
+    })
 
-    return candidateMoves
+    return ret
 }
 
 /**
@@ -385,18 +424,18 @@ export const getQueenCandidateMoves = (board, curPos) => {
  * @returns {[Move]}
  */
 export const getQueenMoves = (board, curPos) => {
-    //TODO - Implement getQueenMoves
     let candidateMoves = getQueenCandidateMoves(board, curPos)
     let ret = []
 
-    // candidateMoves.forEach( curMove => {
-    //     let tempGameState = makeMove(board, curMove)
-    //     if(!kingInCheck(tempGameState, getSide(getPiece(board, curPos)))){
-    //         ret.push(curMove)
-    //     }
-    // })
+    candidateMoves.forEach( curMove => {
+        let tempGameState = makeMove(board, curMove)
+        let tempInCheck = kingInCheck(tempGameState, getSide(getPiece(board, curPos)))
+        if(!tempInCheck){
+            ret.push(curMove)
+        }
+    })
 
-    return candidateMoves
+    return ret
 }
 
 /**
@@ -435,18 +474,18 @@ export const getBishopCandidateMoves = (board, curPos) => {
  * @returns {[Move]}
  */
 export const getBishopMoves = (board, curPos) => {
-    //TODO - Implement getBishopMoves
     let candidateMoves = getBishopCandidateMoves(board, curPos)
     let ret = []
 
-    // candidateMoves.forEach( curMove => {
-    //     let tempGameState = makeMove(board, curMove)
-    //     if(!kingInCheck(tempGameState, getSide(getPiece(board, curPos)))){
-    //         ret.push(curMove)
-    //     }
-    // })
+    candidateMoves.forEach( curMove => {
+        let tempGameState = makeMove(board, curMove)
+        let tempInCheck = kingInCheck(tempGameState, getSide(getPiece(board, curPos)))
+        if(!tempInCheck){
+            ret.push(curMove)
+        }
+    })
 
-    return candidateMoves
+    return ret
 }
 
 /**
@@ -485,18 +524,18 @@ export const getRookCandidateMoves = (board, curPos) => {
  * @returns {[Move]}
  */
 export const getRookMoves = (board, curPos) => {
-    //TODO - Implement getRookMoves
     let candidateMoves = getRookCandidateMoves(board, curPos)
     let ret = []
 
-    // candidateMoves.forEach( curMove => {
-    //     let tempGameState = makeMove(board, curMove)
-    //     if(!kingInCheck(tempGameState, getSide(getPiece(board, curPos)))){
-    //         ret.push(curMove)
-    //     }
-    // })
+    candidateMoves.forEach( curMove => {
+        let tempGameState = makeMove(board, curMove)
+        let tempInCheck = kingInCheck(tempGameState, getSide(getPiece(board, curPos)))
+        if(!tempInCheck){
+            ret.push(curMove)
+        }
+    })
 
-    return candidateMoves
+    return ret
 }
 
 /**
