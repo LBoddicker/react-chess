@@ -1,6 +1,7 @@
 import { Move, PIECE, Position, SIDE } from './GameHelpers'
 import { GameState } from './GameState'
 const cloneDeep = require('lodash/cloneDeep')
+const isEqual = require('lodash/isEqual')
 
 /**
  * This a highlevel function that will return a list of Move objects for any piece
@@ -167,7 +168,7 @@ export const findKingPos = (board, side) => {
     for(let r = 0; r <= 7; r++){
         for(let c = 0; c <= 7; c++){
             if(getPiece(board, Position(r,c)) === matchType){
-                return Position(r,c)
+                return new Position(r,c)
             }
         }
     }
@@ -217,6 +218,7 @@ export const getTeamCandidateMoves = (board, side) => {
  * This function returns true if the king on the specified side is in check
  * @param {GameState} board 
  * @param {SIDE} side 
+ * @returns {boolean}
  */
 export const kingInCheck = (board, side) => {
     let kingPos = findKingPos(board, side)
@@ -224,7 +226,7 @@ export const kingInCheck = (board, side) => {
     let possibleEnemyMoves = getTeamCandidateMoves(board, enemySide)
 
     possibleEnemyMoves.forEach( move => {
-        if(move.ePos === kingPos){ //NOT SURE IF WORKS --> COMPARING CUSTOM CLASSES
+        if(isEqual(move.ePos, kingPos)){
             return true
         }
     })
@@ -242,15 +244,14 @@ export const getKingMoves = (board, curPos) => {
     let candidateMoves = getKingCandidateMoves(board, curPos)
     let ret = []
 
-    //when king makes a move he cannot move into an attack
-    // candidateMoves.forEach( curMove => {
-    //     let tempGameState = makeMove(board, curMove)
-    //     if(!kingInCheck(tempGameState, getSide(getPiece(board, curPos)))){
-    //         ret.push(curMove)
-    //     }
-    // })
+    candidateMoves.forEach( curMove => {
+        let tempGameState = makeMove(board, curMove)
+        if(!kingInCheck(tempGameState, getSide(getPiece(board, curPos)))){
+            ret.push(curMove)
+        }
+    })
 
-    return candidateMoves
+    return ret
 }
 
 /**
