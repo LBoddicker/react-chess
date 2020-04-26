@@ -11,7 +11,8 @@ class Game extends React.Component {
         super(props)
         this.state = {  curGame : new GameState(),
                         highlightPosition : [...Array(8)].map(e => Array(8).fill(false)),
-                        curSelectedCell : null
+                        curSelectedCell : null,
+                        whitesTurn: true,
                     }
     }
 
